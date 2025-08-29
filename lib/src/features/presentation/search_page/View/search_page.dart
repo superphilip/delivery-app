@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 //Colors
-import 'package:delivery_app/src/colors/colors.dart';
+import 'package:delivery_app/src/Colors/colors.dart';
 
 //Widgets
-import 'package:delivery_app/src/features/presentation/commons_widgets/commons_widgets.dart';
+import 'package:delivery_app/src/Features/presentation/commons_widgets/commons_widgets.dart';
 
 class Searchpage extends StatelessWidget {
   const Searchpage({super.key});
