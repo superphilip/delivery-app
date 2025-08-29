@@ -12,6 +12,8 @@ analyzer:
     avoid_print: ignore
     avoid_unnecessary_containers: ignore
     deprecated_member_use: ignore
+    file_names: ignore
+    no_leading_underscores_for_local_identifiers: ignore
     sized_box_for_whitespace: ignore
 include: package:flutter_lints/flutter.yaml
 

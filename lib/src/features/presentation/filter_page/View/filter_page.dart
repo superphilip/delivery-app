@@ -1,6 +1,6 @@
-import 'package:delivery_app/src/colors/colors.dart';
-import 'package:delivery_app/src/features/presentation/commons_widgets/commons_widgets.dart';
-import 'package:delivery_app/src/features/presentation/filter_page/View/customWidgets/custom_widgets.dart';
+import 'package:delivery_app/src/Colors/colors.dart';
+import 'package:delivery_app/src/Features/presentation/commons_widgets/commons_widgets.dart';
+import 'package:delivery_app/src/Features/presentation/filter_page/View/customWidgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 
 class FilterPage extends StatefulWidget {
