@@ -1,4 +1,6 @@
-
+import 'package:delivery_app/src/Base/Views/BaseView.dart';
+import 'package:delivery_app/src/Features/presentation/StateProviders/Provider.dart';
+import 'package:delivery_app/src/Utils/Helpers/ResultType/ResultType.dart';
 import 'package:flutter/material.dart';
 
 //colors
@@ -7,146 +9,158 @@ import 'package:delivery_app/src/Colors/colors.dart';
 //Widgets
 import 'package:delivery_app/src/Features/presentation/commons_widgets/commons_widgets.dart';
 
+//ViewModel
+import 'package:delivery_app/src/Features/presentation/sign_up_page/ViewModel/SignUpViewModel.dart';
 
-class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
+import 'package:provider/provider.dart';
+
+class SignUpPage extends StatelessWidget with BaseView {
+  final SignUpViewModel _viewModel;
+
+  SignUpPage({super.key, SignUpViewModel? viewModel})
+    : _viewModel = viewModel ?? DefaultSignUpViewModel();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: Builder(
-          builder: (BuildContext context) {
-            return backButton(context, Colors.black);
-          },
-        ),
-      ),
-      body: Center(
-        child: Container(
-          padding: EdgeInsets.all(30),
-          child: Column(
-            children: [
-              headerText('Create an account', primaryColor, 30, FontWeight.bold),
-              _usernameInput(context),
-              _emailInput(context),
-              _phoneInput(context),
-              _dateOfBirthInput(context),
-              _passwordInput(context),
-              createButton(margin: EdgeInsets.only(top: 30), marginText: EdgeInsets.only(left: 10), color: orange, fontSize: 15, labelButton: 'Sign up', func: () => Navigator.pushNamed(context, 'login')),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-                child: 
-                  headerText('By clicking Sign up you agree to the following terms and Conditions without reservation', Colors.black, 13, FontWeight.w400),
-              )
+    Future.delayed(Duration.zero, () async {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _viewModel.iniState(
+          loadingStateProvider: Provider.of<LoadingStateProvider>(context),
+        );
+      });
+    });
 
-            ],
-          ),
-        ),
-      ),
-    );
+    return _viewModel.loadingState.isLoading
+        ? loadingView
+        : Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              elevation: 0,
+              leading: Builder(
+                builder: (BuildContext context) {
+                  return backButton(context, Colors.black);
+                },
+              ),
+            ),
+            body: CustomScrollView(
+              slivers: [
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    Center(
+                      child: Form(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        child: Container(
+                          padding: EdgeInsets.all(30),
+                          child: Column(
+                            children: [
+                              headerText(
+                                'Create an account',
+                                primaryColor,
+                                30,
+                                FontWeight.bold,
+                              ),
+                              SizedBox(height: 20),
+                              CustomTextFormField(
+                                textFormFieldType:
+                                    CustomTextFormFieldType.username,
+                                hintText: 'Username',
+                                delegate: _viewModel,
+                              ),
+                              CustomTextFormField(
+                                textFormFieldType:
+                                    CustomTextFormFieldType.email,
+                                hintText: 'Email',
+                                delegate: _viewModel,
+                              ),
+                              CustomTextFormField(
+                                textFormFieldType:
+                                    CustomTextFormFieldType.phone,
+                                hintText: 'Phone',
+                                delegate: _viewModel,
+                              ),
+                              GestureDetector(
+                                onTap: _selectDate(context),
+                                child: AbsorbPointer(
+                                  child: CustomTextFormField(
+                                    textFormFieldType:
+                                        CustomTextFormFieldType.dateOfBirth,
+                                    hintText: 'Date of Birth',
+                                    delegate: _viewModel,
+                                    controller: _viewModel.dateController,
+                                  ),
+                                ),
+                              ),
+                              CustomTextFormField(
+                                textFormFieldType:
+                                    CustomTextFormFieldType.password,
+                                hintText: 'Password',
+                                delegate: _viewModel,
+                              ),
+                              createButton(
+                                margin: EdgeInsets.only(top: 30),
+                                marginText: EdgeInsets.only(left: 10),
+                                color: orange,
+                                fontSize: 15,
+                                labelButton: 'Sign up',
+                                func: () =>
+                                    Navigator.pushNamed(context, 'login'),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 40,
+                                ),
+                                child: headerText(
+                                  'By clicking Sign up you agree to the following terms and Conditions without reservation',
+                                  Colors.black,
+                                  13,
+                                  FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]),
+                ),
+              ],
+            ),
+          );
   }
 }
 
-Widget _usernameInput(BuildContext context) {
-  return Container(
-    margin: EdgeInsets.only(top: 40),
-    padding: EdgeInsets.only(left: 20),
-    decoration: BoxDecoration(
-      color: bgInputs,
-      borderRadius: BorderRadius.circular(40)
-    ),
-    child: TextField(
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        hintText: 'Username',
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none
-        )
-      ),
-    ),
-  );
-}
+extension UserAction on SignUpPage {
+  _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _viewModel.selectedDate,
+      firstDate: DateTime(1960, 1),
+      lastDate: DateTime(2100),
+      locale: Locale('es', ''),
+    );
+    if (picked != null && picked != _viewModel.selectedDate) {
+      _viewModel.selectedDate = picked;
+      _viewModel.dateController.text =
+          "${picked.day}/${picked.month}/${picked.year}";
+      _viewModel.signUpModel?.date = _viewModel.dateController.text;
+    }
+  }
 
-Widget _emailInput(BuildContext context) {
-  return Container(
-    margin: EdgeInsets.only(top: 10),
-    padding: EdgeInsets.only(left: 20),
-    decoration: BoxDecoration(
-      color: bgInputs,
-      borderRadius: BorderRadius.circular(40)
-    ),
-    child: TextField(
-      keyboardType: TextInputType.phone,
-      decoration: InputDecoration(
-        hintText: 'Phone',
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none
-        )
-      ),
-    ),
-  );
-}
-
-Widget _phoneInput(BuildContext context) {
-  return Container(
-    margin: EdgeInsets.only(top: 10),
-    padding: EdgeInsets.only(left: 20),
-    decoration: BoxDecoration(
-      color: bgInputs,
-      borderRadius: BorderRadius.circular(40)
-    ),
-    child: TextField(
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        hintText: 'Email',
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none
-        )
-      ),
-    ),
-  );
-}
-
-Widget _dateOfBirthInput(BuildContext context) {
-  return Container(
-    margin: EdgeInsets.only(top: 10),
-    padding: EdgeInsets.only(left: 20),
-    decoration: BoxDecoration(
-      color: bgInputs,
-      borderRadius: BorderRadius.circular(40)
-    ),
-    child: TextField(
-      keyboardType: TextInputType.datetime,
-      decoration: InputDecoration(
-        hintText: 'Date of Birth',
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none
-        )
-      ),
-    ),
-  );
-}
-
-Widget _passwordInput(BuildContext context) {
-  return Container(
-    margin: EdgeInsets.only(top: 10),
-    padding: EdgeInsets.only(left: 20),
-    decoration: BoxDecoration(
-      color: bgInputs,
-      borderRadius: BorderRadius.circular(40)
-    ),
-    child: TextField(
-      keyboardType: TextInputType.visiblePassword,
-      obscureText: true,
-      decoration: InputDecoration(
-        hintText: 'Password',
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none
-        )
-      ),
-    ),
-  );
+  void ctaTapped(BuildContext context) {
+    if (_viewModel.isFormValidate()) {
+      _viewModel.SignUp().then((result) {
+        switch (result.status) {
+          case ResultStatus.success:
+            Navigator.pushNamed(context, 'Tabs');
+          case ResultStatus.error:
+            errorStateProvider.setFailure(
+              context: context,
+              value: result.error!,
+            );
+        }
+      });
+    }
+  }
 }

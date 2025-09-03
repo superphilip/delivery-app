@@ -1,7 +1,7 @@
 
-import 'package:delivery_app/src/Services/FirebaseServices/AuthFirebaseServices/AuthFirebaseInterfaces.dart';
+import 'package:delivery_app/src/Services/FirebaseServices/AuthFirebaseServices/Interfaces/AuthFirebaseInterfaces.dart';
 
-class DefaultSignInService extends SignInFirebase {
+class DefaultSignInService extends SignInService {
   @override
   Future<Map<String, dynamic>> signIn({
     required Map<String, dynamic> bodyParameters,

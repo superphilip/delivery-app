@@ -72,7 +72,7 @@ Future _pedirLocation(BuildContext context) async {
   await showAlertDialog(
     context,
     Image(
-      width: 130, 
+      width: 130,
       height: 130,
       image: AssetImage('assets/location.png')
     ),
@@ -81,4 +81,3 @@ Future _pedirLocation(BuildContext context) async {
     createButton(margin: EdgeInsets.only(top: 40), color: orange, marginText: EdgeInsets.only(left: 10), fontSize: 15, labelButton: 'Enable Location', func: () => Navigator.pop(context))
   );
 }
-
