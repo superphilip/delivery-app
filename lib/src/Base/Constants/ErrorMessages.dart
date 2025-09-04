@@ -7,7 +7,7 @@ abstract class FBFailureMessages {
       "There is no user record corresponding to this identifier. The user may have been delated.";
   static String invalidPasswordMessage =
       "The password is invalid or the user does not have a password";
-  static String emailExitsMessage =
+  static String emailExitMessage =
       "The email address is already in use by another account.";
   static String tooManyAttemptsMessage =
       "We've blocked all requests from this device due to unusual activity. Please try again later.";

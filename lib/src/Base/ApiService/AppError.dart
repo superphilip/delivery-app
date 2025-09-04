@@ -15,12 +15,13 @@ class Failure {
   }
 
   @override
-  String toString() => message ?? 'Hubo un error inesperado';
+  String toString() => message ?? "";
 
   static Failure getFirebaseAuthErrorMessage({
     required Map<String, dynamic> error,
   }) {
     AuthErrorDecodable _errorDecodable = AuthErrorDecodable.fromMap(error);
+
     var message = "";
     _errorDecodable.error?.errors?.forEach((error) {
       message = error.message ?? "";
@@ -30,12 +31,12 @@ class Failure {
       return Failure.fromMessage(
         message: FBFailureMessages.emailNotFoundMessage,
       );
-    } else if (message == "INVALID_PASSWORD") {
+    } else if (message == "INVALID_LOGIN_CREDENTIALS") {
       return Failure.fromMessage(
         message: FBFailureMessages.invalidPasswordMessage,
       );
     } else if (message == "EMAIL_EXISTS") {
-      return Failure.fromMessage(message: FBFailureMessages.emailExitsMessage);
+      return Failure.fromMessage(message: FBFailureMessages.emailExitMessage);
     } else if (message == "TOO_MANY_ATTEMPTS_TRY_LATER") {
       return Failure.fromMessage(
         message: FBFailureMessages.tooManyAttemptsMessage,
