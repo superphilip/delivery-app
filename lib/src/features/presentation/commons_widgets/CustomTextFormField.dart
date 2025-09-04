@@ -81,8 +81,9 @@ class CustomTextFormField extends StatelessWidget {
       case CustomTextFormFieldType.phone:
         return TextInputType.phone;
       default:
-        break;
+        return TextInputType.text;
     }
-    return null;
+    
+    
   }
 }

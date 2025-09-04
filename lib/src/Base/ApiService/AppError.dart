@@ -7,15 +7,15 @@ class Failure {
   String? message;
   Map<String, dynamic> error = {};
 
-  @override
-  String toString() => message ?? 'Hubo un error inesperado';
-
   Failure.fromMessage({this.message});
 
   Failure.fromBody({required String body}) {
     var jsonData = jsonDecode(body);
     error = jsonData;
   }
+
+  @override
+  String toString() => message ?? 'Hubo un error inesperado';
 
   static Failure getFirebaseAuthErrorMessage({
     required Map<String, dynamic> error,
@@ -34,7 +34,7 @@ class Failure {
       return Failure.fromMessage(
         message: FBFailureMessages.invalidPasswordMessage,
       );
-    } else if (message == "EMAIL_EXITS") {
+    } else if (message == "EMAIL_EXISTS") {
       return Failure.fromMessage(message: FBFailureMessages.emailExitsMessage);
     } else if (message == "TOO_MANY_ATTEMPTS_TRY_LATER") {
       return Failure.fromMessage(
