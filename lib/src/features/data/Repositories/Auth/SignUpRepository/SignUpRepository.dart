@@ -16,7 +16,7 @@ class DefaultSignUpRepository extends SignUpRepository {
 
   @override
   Future<Result<SignUpDecodable, Failure>> signUp({
-    required SignupRepositoryParameters params,
+    required SignUpRepositoryParameters params,
   }) async {
     try {
       final result = await _signUpService.signUp(

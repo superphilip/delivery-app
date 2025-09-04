@@ -1,5 +1,5 @@
-class SignupRepositoryParameters {
-  SignupRepositoryParameters({required this.email, required this.password});
+class SignUpRepositoryParameters {
+  SignUpRepositoryParameters({required this.email, required this.password});
 
   final String email;
   final String password;

@@ -11,8 +11,9 @@ class UserDecodable {
     this.startDate,
     this.photo,
     this.shippingAddress,
-    this.bilingAddress,
+    this.billingAddress,
     this.idToken,
+    this.provider
   });
 
   String? localId;
@@ -24,8 +25,9 @@ class UserDecodable {
   String? startDate;
   String? photo;
   String? shippingAddress;
-  String? bilingAddress;
+  String? billingAddress;
   String? idToken;
+  String? provider;
 
   factory UserDecodable.fromJson(String str) =>
       UserDecodable.fromMap(json.decode(str));
@@ -33,31 +35,34 @@ class UserDecodable {
   String toJson() => json.encode(toMap());
 
   factory UserDecodable.fromMap(Map<String, dynamic> json) => UserDecodable(
-    localId: json["localId"],
-    role: json["role"],
-    username: json["username"],
-    email: json["email"],
-    phone: json["phone"],
-    dateOfBirth: json["dateOfBirth"],
-    startDate: json["startDate"],
-    photo: json["photo"],
-    shippingAddress: json["shippingAddress"],
-    bilingAddress: json["bilingAddress"],
-    idToken: json["idToken"],
-    
-  );
+        localId: json["localId"],
+        role: json["role"],
+        username: json["username"],
+        email: json["email"],
+        phone: json["phone"],
+        dateOfBirth: json["dateOfBirth"],
+        startDate: json["startDate"],
+        photo: json["photo"],
+        shippingAddress:
+            json["shippingAddress"],
+        billingAddress:
+            json["billingAddress"],
+        idToken: json["idToken"],
+        provider: json["provider"]
+      );
 
   Map<String, dynamic> toMap() => {
-    "localId": localId,
-    "role": role,
-    "usarname": username,
-    "email": email,
-    "phone": phone,
-    "dateOfBirth": dateOfBirth,
-    "startDate": startDate,
-    "photo": photo,
-    "shippingAddress": shippingAddress,
-    "bilingAddress": bilingAddress,
-    "idToken": idToken,
-  };
+        "localId": localId,
+        "role": role,
+        "username": username,
+        "email": email,
+        "phone": phone,
+        "dateOfBirth": dateOfBirth,
+        "startDate": startDate,
+        "photo": photo,
+        "shippingAddress": shippingAddress,
+        "billingAddress": billingAddress,
+        "idToken": billingAddress == null ? null : idToken,
+        "provider": provider
+      };
 }

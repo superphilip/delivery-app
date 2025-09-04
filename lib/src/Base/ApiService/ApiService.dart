@@ -88,7 +88,7 @@ class DefaultApiService extends Apiservice {
     required Map<String, dynamic> bodyParameters,
     required String url,
     Map<String, String>? headers,
-  })async  {
+  }) async  {
     final _url = Uri.parse(url);
     final body = json.encode(bodyParameters);
     final response = await http.put(

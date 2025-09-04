@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 abstract class SignUpViewModelInput {
   late LoadingStateProvider loadingState = LoadingStateProvider();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  late TextEditingController dateController;
+  late TextEditingController dateController = TextEditingController();
   late DateTime selectedDate = DateTime.now();
   SignUpModel? signUpModel = SignUpModel();
 
@@ -22,7 +22,7 @@ abstract class SignUpViewModelInput {
   bool isFormValidate();
 }
 
-abstract class SignUpViewModel extends SignUpViewModelInput implements TextFormFieldDelegate {}
+abstract class SignUpViewModel extends SignUpViewModelInput with TextFormFieldDelegate {}
 
 class DefaultSignUpViewModel extends SignUpViewModel {
   final SignUpUseCase _signUpUseCase;
@@ -94,7 +94,7 @@ class DefaultSignUpViewModel extends SignUpViewModel {
         break;
       case CustomTextFormFieldType.dateOfBirth:
         signUpModel?.date = newValue;
-        break;
+        break; 
     }
   }
 }

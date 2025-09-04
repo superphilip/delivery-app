@@ -35,7 +35,7 @@ class DefaultSignUpUseCase extends SignUpUseCase {
   }) {
     return _signUpRepository
         .signUp(
-          params: SignupRepositoryParameters(
+          params: SignUpRepositoryParameters(
             email: params.email,
             password: params.password,
           ),
@@ -69,6 +69,7 @@ extension on DefaultSignUpUseCase {
       localId: entity.localId,
       role: UserRole.user,
       username: params.username,
+      email: params.email,
       phone: params.phone,
       dateOfBirth: params.date,
       startDate: Datehelpers.getStartDate(),

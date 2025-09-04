@@ -2,7 +2,7 @@ import 'package:delivery_app/src/Colors/colors.dart';
 import 'package:delivery_app/src/Utils/Helpers/Validators/FormValidators.dart';
 import 'package:flutter/material.dart';
 
-abstract class TextFormFieldDelegate {
+mixin TextFormFieldDelegate {
   onChanged({
     required String newValue,
     required CustomTextFormFieldType customTextFormFieldType,
@@ -20,8 +20,10 @@ class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
     required this.textFormFieldType,
-    required this.hintText, required this.delegate, TextEditingController? controller,
-  }): _controller = controller;
+    required this.hintText,
+    required this.delegate,
+    TextEditingController? controller,
+  }) : _controller = controller;
 
   @override
   Widget build(BuildContext context) {
@@ -34,31 +36,41 @@ class CustomTextFormField extends StatelessWidget {
       ),
       child: TextFormField(
         controller: _controller,
-        keyboardType: getKeyboardType(textFormFieldType: textFormFieldType),
-        obscureText: textFormFieldType == CustomTextFormFieldType.password ? true : false,
+        keyboardType: _getKeyboardType(textFormFieldType: textFormFieldType),
+        obscureText: textFormFieldType == CustomTextFormFieldType.password
+            ? true
+            : false,
         decoration: InputDecoration(
           hintText: hintText,
           border: OutlineInputBorder(borderSide: BorderSide.none),
         ),
-        onChanged: (newValue) => delegate.onChanged(newValue: newValue, customTextFormFieldType: textFormFieldType),
+        onChanged: (newValue) => delegate.onChanged(
+          newValue: newValue,
+          customTextFormFieldType: textFormFieldType,
+        ),
         validator: (value) {
           switch (textFormFieldType) {
             case CustomTextFormFieldType.email:
               return EmailFormValidator.validateEmail(email: value ?? '');
             case CustomTextFormFieldType.password:
-              return PasswordFormValidator.validatePassword(password: value ?? '');
+              return PasswordFormValidator.validatePassword(
+                password: value ?? '',
+              );
             case CustomTextFormFieldType.username:
+              return DefaultFormValidator.validateField(value: value ?? '');
             case CustomTextFormFieldType.phone:
               return DefaultFormValidator.validateField(value: value ?? '');
-            case CustomTextFormFieldType.dateOfBirth:
-              throw UnimplementedError();
+            default:
+              return null;
           }
         },
       ),
     );
   }
 
-  TextInputType? getKeyboardType({required CustomTextFormFieldType textFormFieldType}) {
+  TextInputType? _getKeyboardType({
+    required CustomTextFormFieldType textFormFieldType,
+  }) {
     switch (textFormFieldType) {
       case CustomTextFormFieldType.email:
         return TextInputType.emailAddress;
@@ -68,8 +80,9 @@ class CustomTextFormField extends StatelessWidget {
         return TextInputType.text;
       case CustomTextFormFieldType.phone:
         return TextInputType.phone;
-      case CustomTextFormFieldType.dateOfBirth:
-        throw UnimplementedError();
+      default:
+        break;
     }
+    return null;
   }
 }

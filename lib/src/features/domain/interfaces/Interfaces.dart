@@ -18,7 +18,7 @@ abstract class SignInRepository {
 }
 
 abstract class SignUpRepository {
-  Future<Result<SignUpDecodable, Failure>> signUp({required SignupRepositoryParameters params});
+  Future<Result<SignUpDecodable, Failure>> signUp({required SignUpRepositoryParameters params});
 }
 
 abstract class UpdatePasswordRepository {

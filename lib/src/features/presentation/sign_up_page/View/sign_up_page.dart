@@ -20,16 +20,13 @@ class SignUpPage extends StatelessWidget with BaseView {
   SignUpPage({super.key, SignUpViewModel? viewModel})
     : _viewModel = viewModel ?? DefaultSignUpViewModel();
 
+  
+
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration.zero, () async {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _viewModel.iniState(
-          loadingStateProvider: Provider.of<LoadingStateProvider>(context),
-        );
-      });
-    });
-
+    _viewModel.iniState(
+        loadingStateProvider: Provider.of<LoadingStateProvider>(context),
+    );
     return _viewModel.loadingState.isLoading
         ? loadingView
         : Scaffold(
@@ -80,7 +77,7 @@ class SignUpPage extends StatelessWidget with BaseView {
                                 delegate: _viewModel,
                               ),
                               GestureDetector(
-                                onTap: _selectDate(context),
+                                onTap: () => _selectDate(context),
                                 child: AbsorbPointer(
                                   child: CustomTextFormField(
                                     textFormFieldType:
@@ -103,8 +100,9 @@ class SignUpPage extends StatelessWidget with BaseView {
                                 color: orange,
                                 fontSize: 15,
                                 labelButton: 'Sign up',
-                                func: () =>
-                                    Navigator.pushNamed(context, 'login'),
+                                func: () {
+                                  _ctaTapped(context);
+                                },
                               ),
                               Container(
                                 padding: EdgeInsets.symmetric(
@@ -132,7 +130,7 @@ class SignUpPage extends StatelessWidget with BaseView {
 }
 
 extension UserAction on SignUpPage {
-  _selectDate(BuildContext context) async {
+  void _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _viewModel.selectedDate,
@@ -141,19 +139,19 @@ extension UserAction on SignUpPage {
       locale: Locale('es', ''),
     );
     if (picked != null && picked != _viewModel.selectedDate) {
-      _viewModel.selectedDate = picked;
+      _viewModel.signUpModel?.date =
+          "${picked.day}/${picked.month}/${picked.year}";
       _viewModel.dateController.text =
           "${picked.day}/${picked.month}/${picked.year}";
-      _viewModel.signUpModel?.date = _viewModel.dateController.text;
     }
   }
 
-  void ctaTapped(BuildContext context) {
-    if (_viewModel.isFormValidate()) {
+  void _ctaTapped(BuildContext context) {
+    if (!_viewModel.isFormValidate()) {
       _viewModel.SignUp().then((result) {
         switch (result.status) {
           case ResultStatus.success:
-            Navigator.pushNamed(context, 'Tabs');
+            Navigator.pushNamed(context, 'tabs');
           case ResultStatus.error:
             errorStateProvider.setFailure(
               context: context,
