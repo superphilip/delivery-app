@@ -47,6 +47,7 @@ class SignUpPage extends StatelessWidget with BaseView {
                     Center(
                       child: Form(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                        key: _viewModel.formKey,
                         child: Container(
                           padding: EdgeInsets.all(30),
                           child: Column(
@@ -147,7 +148,7 @@ extension UserAction on SignUpPage {
   }
 
   void _ctaTapped(BuildContext context) {
-    if (!_viewModel.isFormValidate()) {
+    if (_viewModel.isFormValidate()) {
       _viewModel.SignUp().then((result) {
         switch (result.status) {
           case ResultStatus.success:

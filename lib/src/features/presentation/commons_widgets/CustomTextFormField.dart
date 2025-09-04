@@ -50,19 +50,20 @@ class CustomTextFormField extends StatelessWidget {
         ),
         validator: (value) {
           switch (textFormFieldType) {
-            case CustomTextFormFieldType.email:
-              return EmailFormValidator.validateEmail(email: value ?? '');
-            case CustomTextFormFieldType.password:
-              return PasswordFormValidator.validatePassword(
-                password: value ?? '',
-              );
-            case CustomTextFormFieldType.username:
-              return DefaultFormValidator.validateField(value: value ?? '');
-            case CustomTextFormFieldType.phone:
-              return DefaultFormValidator.validateField(value: value ?? '');
-            default:
-              return null;
-          }
+              case CustomTextFormFieldType.email:
+                return EmailFormValidator.validateEmail(email: value ?? '');
+              case CustomTextFormFieldType.password:
+                return PasswordFormValidator.validatePassword(
+                    password: value ?? '');
+              case CustomTextFormFieldType.username:
+                return DefaultFormValidator.validateIsNotEmpty(
+                    value: value ?? '');
+              case CustomTextFormFieldType.phone:
+                return DefaultFormValidator.validateIsNotEmpty(
+                    value: value ?? '');
+              default:
+                return null;
+            }
         },
       ),
     );
