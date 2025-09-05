@@ -23,14 +23,14 @@ class LoginPage extends StatelessWidget with BaseView {
   @override
   Widget build(BuildContext context) {
     _viewModel.iniState(
-      loadingState: Provider.of<LoadingStateProvider>(context),
+      loadingStateProvider: Provider.of<LoadingStateProvider>(context),
     );
 
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.white),
     );
 
-    return _viewModel.loadingStatusState.isLoading
+    return _viewModel.loadingState.isLoading
         ? loadingView
         : Scaffold(
             resizeToAvoidBottomInset: false,
@@ -51,10 +51,7 @@ class LoginPage extends StatelessWidget with BaseView {
                                 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEMDd9&auto=format&fit=crop&w=500&q=60',
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.only(top: 50),
-                              child: backButton(context, Colors.white),
-                            ),
+                            
                           ],
                         ),
                         Transform.translate(

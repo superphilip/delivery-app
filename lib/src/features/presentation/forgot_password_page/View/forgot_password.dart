@@ -1,3 +1,5 @@
+import 'package:delivery_app/src/Features/presentation/forgot_password_page/View/Components/TextFormFieldForgotEmail.dart';
+import 'package:delivery_app/src/Features/presentation/forgot_password_page/ViewModel/ForgotPasswordViewModel.dart';
 import 'package:flutter/material.dart';
 
 //Widgets
@@ -6,8 +8,18 @@ import 'package:delivery_app/src/Features/presentation/commons_widgets/commons_w
 //Colors
 import 'package:delivery_app/src/Colors/colors.dart';
 
-class ForgotPassword extends StatelessWidget {
+class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
+
+  @override
+  State<ForgotPassword> createState() => _ForgotPasswordState();
+}
+
+class _ForgotPasswordState extends State<ForgotPassword> {
+  final ForgotPasswordViewModel _viewModel;
+
+  _ForgotPasswordState({ForgotPasswordViewModel? viewModel})
+    : _viewModel = viewModel ?? DefaultForgotPasswordViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +38,7 @@ class ForgotPassword extends StatelessWidget {
           padding: EdgeInsets.all(30),
           child: Column(
             children: [
-              headerText(
-                'Forgot password',
-                primaryColor,
-                30,
-                FontWeight.bold,
-              ),
+              headerText('Forgot password', primaryColor, 30, FontWeight.bold),
               Container(
                 padding: EdgeInsets.all(10),
                 child: headerText(
@@ -41,33 +48,23 @@ class ForgotPassword extends StatelessWidget {
                   FontWeight.w400,
                 ),
               ),
-              _emailInput(),
+              TextFormFieldEmailUpdatePassword(viewModel: _viewModel),
               // _seendButton(context),
-              createButton(width: 370, margin: EdgeInsets.only(top: 40), color: orange, marginText: EdgeInsets.only(left: 10), fontSize: 17, labelButton: 'Send', func: () => _showAlerta(context)),
+              createButton(
+                width: 370,
+                margin: EdgeInsets.only(top: 40),
+                color: orange,
+                marginText: EdgeInsets.only(left: 10),
+                fontSize: 17,
+                labelButton: 'Send',
+                func: () => _ctaButtonTapped(context),
+              ),
             ],
           ),
         ),
       ),
     );
   }
-}
-
-Widget _emailInput() {
-  return Container(
-    margin: EdgeInsets.only(top: 40),
-    padding: EdgeInsets.only(left: 20),
-    decoration: BoxDecoration(
-      color: bgInputs,
-      borderRadius: BorderRadius.circular(30),
-    ),
-    child: TextField(
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        hintText: 'Your email',
-        border: OutlineInputBorder(borderSide: BorderSide.none),
-      ),
-    ),
-  );
 }
 
 // Widget _seendButton(BuildContext context) {
@@ -87,14 +84,24 @@ Widget _emailInput() {
 //   );
 // }
 
-Future _showAlerta(BuildContext context) async {
-  await showAlertDialog(
-    context,
-    Image(width: 130, height: 130, image: AssetImage('assets/lock.png')),
-    'Your password has been reset',
-    "You'll shortly receive an email with a code to setup a new passwword.",
-    createButton(width: 370, margin: EdgeInsets.only(top: 40), color: orange, marginText: EdgeInsets.only(left: 10), fontSize: 17, labelButton: 'Done', func: () => Navigator.pop(context))
-  );
+extension UserActions on _ForgotPasswordState {
+  void _ctaButtonTapped(BuildContext context) {
+    _viewModel.updatePassword().then((value) {
+      showAlertDialog(
+        context,
+        Image(width: 130, height: 130, image: AssetImage('assets/lock.png')),
+        'Your password has been reset',
+        "You'll shortly receive an email with a code to setup a new passwword.",
+        createButton(
+          width: 370,
+          margin: EdgeInsets.only(top: 20),
+          color: orange,
+          marginText: EdgeInsets.only(left: 10),
+          fontSize: 17,
+          labelButton: 'Done',
+          func: () => Navigator.pushNamed(context, 'login'),
+        ),
+      );
+    });
+  }
 }
-
-

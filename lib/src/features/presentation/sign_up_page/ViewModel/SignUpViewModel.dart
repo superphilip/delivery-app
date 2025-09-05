@@ -1,5 +1,6 @@
 import 'package:delivery_app/src/Base/ApiService/AppError.dart';
 import 'package:delivery_app/src/Base/Constants/LocalStorageKeys.dart';
+import 'package:delivery_app/src/Base/Views/BaseView.dart';
 import 'package:delivery_app/src/Features/domain/UseCases/Auth/SignUpUseCase/SignUpUseCase.dart';
 import 'package:delivery_app/src/Features/domain/UseCases/Auth/SignUpUseCase/SignUpUseCaseParameters.dart';
 import 'package:delivery_app/src/Features/domain/UseCases/LocalStorage/LocalStorageUseCaseParameters.dart';
@@ -11,18 +12,18 @@ import 'package:delivery_app/src/Utils/Helpers/ResultType/ResultType.dart';
 import 'package:flutter/material.dart';
 
 abstract class SignUpViewModelInput {
-  late LoadingStateProvider loadingState = LoadingStateProvider();
+  
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late TextEditingController dateController = TextEditingController();
   late DateTime selectedDate = DateTime.now();
   SignUpModel? signUpModel = SignUpModel();
 
-  void iniState({required LoadingStateProvider loadingStateProvider});
+  
   Future<Result<bool, Failure>> SignUp();
   bool isFormValidate();
 }
 
-abstract class SignUpViewModel extends SignUpViewModelInput with TextFormFieldDelegate {}
+abstract class SignUpViewModel extends SignUpViewModelInput with TextFormFieldDelegate, BaseViewModel {}
 
 class DefaultSignUpViewModel extends SignUpViewModel {
   final SignUpUseCase _signUpUseCase;

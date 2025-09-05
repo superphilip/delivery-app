@@ -40,7 +40,7 @@ Future showAlertDialog(
                 ),
               ),
               Container(
-                margin: EdgeInsets.all(15),
+                margin: EdgeInsets.only(top: 10),
                 child: headerText(
                   headerSubTitle,
                   primaryColor,
