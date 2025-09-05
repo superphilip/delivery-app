@@ -1,8 +1,8 @@
 import 'package:delivery_app/src/Colors/colors.dart';
 import 'package:delivery_app/src/Features/presentation/StateProviders/LoadingStatusStateProvider.dart';
-import 'package:delivery_app/src/Features/presentation/commons_widgets/alert_dialog.dart';
+
 import 'package:delivery_app/src/Features/presentation/commons_widgets/commons_widgets.dart';
-import 'package:delivery_app/src/Features/presentation/commons_widgets/header_text.dart';
+
 import 'package:delivery_app/src/Features/presentation/tabs/profile_tab/Model/ProfileTabVewModel.dart';
 import 'package:delivery_app/src/Features/presentation/welcome_page/View/welcome_page.dart';
 import 'package:flutter/material.dart';
