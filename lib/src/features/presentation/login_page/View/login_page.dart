@@ -1,6 +1,7 @@
 import 'package:delivery_app/src/Base/Views/BaseView.dart';
 import 'package:delivery_app/src/Features/presentation/StateProviders/Provider.dart';
 import 'package:delivery_app/src/Features/presentation/login_page/ViewModel/LoginViewModel.dart';
+import 'package:delivery_app/src/Features/presentation/tabs/TabsPage/View/tabs_page.dart';
 import 'package:delivery_app/src/Utils/Helpers/ResultType/ResultType.dart';
 import 'package:flutter/material.dart';
 
@@ -51,7 +52,6 @@ class LoginPage extends StatelessWidget with BaseView {
                                 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEMDd9&auto=format&fit=crop&w=500&q=60',
                               ),
                             ),
-                            
                           ],
                         ),
                         Transform.translate(
@@ -181,7 +181,10 @@ extension UserActions on LoginPage {
           .then((result) {
             switch (result.status) {
               case ResultStatus.success:
-                Navigator.pushNamed(context, 'tabs');
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const TabsPage()),
+                  (Route<dynamic> route) => false,
+                );
               case ResultStatus.error:
                 if (result.error != null) {
                   errorStateProvider.setFailure(

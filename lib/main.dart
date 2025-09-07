@@ -1,5 +1,7 @@
 import 'package:delivery_app/src/Base/Views/BaseView.dart';
+import 'package:delivery_app/src/Colors/colors.dart';
 import 'package:delivery_app/src/Features/presentation/StateProviders/Provider.dart';
+
 import 'package:flutter/material.dart';
 
 //routes
@@ -33,7 +35,11 @@ class MyAppUSerState extends StatelessWidget with BaseView {
       future: coordinator.start(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) return MyApp(initialRoute: snapshot.data);
-        return CircularProgressIndicator();
+        return MaterialApp(
+          home: Scaffold(
+            body: Container(),
+          ),
+        );
       },
     );
   }

@@ -1,5 +1,7 @@
 import 'package:delivery_app/src/Base/Views/BaseView.dart';
 import 'package:delivery_app/src/Features/presentation/StateProviders/Provider.dart';
+import 'package:delivery_app/src/Features/presentation/tabs/TabsPage/View/tabs_page.dart';
+
 import 'package:delivery_app/src/Utils/Helpers/ResultType/ResultType.dart';
 import 'package:flutter/material.dart';
 
@@ -152,7 +154,10 @@ extension UserAction on SignUpPage {
       _viewModel.SignUp().then((result) {
         switch (result.status) {
           case ResultStatus.success:
-            Navigator.pushNamed(context, 'tabs');
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const TabsPage()),
+              (Route<dynamic> route) => false,
+            );
           case ResultStatus.error:
             errorStateProvider.setFailure(
               context: context,

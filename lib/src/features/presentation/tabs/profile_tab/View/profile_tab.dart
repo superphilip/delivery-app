@@ -31,13 +31,13 @@ class _ProfileTabState extends State<ProfileTab> {
       resizeToAvoidBottomInset: false,
       body: CustomScrollView(
         slivers: [
-          SliverList(delegate: SliverChildListDelegate(
-            [
+          SliverList(
+            delegate: SliverChildListDelegate([
               Column(children: [_header(context), _contentProfile(context)]),
-            ]
-          ))
+            ]),
+          ),
         ],
-      )
+      ),
     );
   }
 
@@ -233,11 +233,7 @@ class _ProfileTabState extends State<ProfileTab> {
   Future _signOut(BuildContext context) async {
     await showAlertDialog(
       context,
-      Image(
-        width: 130,
-        height: 130,
-        image: AssetImage('assets/logout.png')
-      ),
+      Image(width: 130, height: 130, image: AssetImage('assets/logout.png')),
       'Cierre de sesión en curso',
       '¿Desea salir de la sesión actual?',
       createButton(
@@ -248,16 +244,13 @@ class _ProfileTabState extends State<ProfileTab> {
         labelButton: 'Cerrar Sesión',
         func: () {
           _viewModel.signOut().then((result) {
-            Navigator.pushReplacement(
-              context,
-              PageRouteBuilder(pageBuilder: (_, __, ___) => WelcomePage(),
-              transitionDuration: Duration(seconds: 0)
-              ),
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const WelcomePage()),
+              (Route<dynamic> route) => false,
             );
           });
         },
       ),
-      
     );
   }
 }
