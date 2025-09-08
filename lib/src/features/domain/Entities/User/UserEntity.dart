@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../../../../features/Domain/UseCases/User/SaveUserDataUseCase/SaveUserDataUseCaseParameters.dart';
+
 class UserEntity {
   UserEntity({
     this.localId,
@@ -11,8 +13,9 @@ class UserEntity {
     this.startDate,
     this.photo,
     this.shippingAddress,
-    this.bilingAddress,
+    this.billingAddress,
     this.idToken,
+    this.provider
   });
 
   String? localId;
@@ -24,11 +27,11 @@ class UserEntity {
   String? startDate;
   String? photo;
   String? shippingAddress;
-  String? bilingAddress;
+  String? billingAddress;
   String? idToken;
+  String? provider;
 
-  factory UserEntity.fromJson(String str) =>
-      UserEntity.fromMap(json.decode(str));
+  factory UserEntity.fromJson(String str) => UserEntity.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
@@ -42,26 +45,52 @@ class UserEntity {
     startDate: json["startDate"],
     photo: json["photo"],
     shippingAddress: json["shippingAddress"],
-    bilingAddress: json["bilingAddress"],
+    billingAddress: json["billingAddress"],
     idToken: json["idToken"],
+    provider: json["provider"]
   );
 
   Map<String, dynamic> toMap() => {
     "localId": localId,
     "role": role,
-    "usarname": username,
+    "username": username,
     "email": email,
     "phone": phone,
     "dateOfBirth": dateOfBirth,
     "startDate": startDate,
     "photo": photo,
     "shippingAddress": shippingAddress,
-    "bilingAddress": bilingAddress,
-    "idToken": idToken,
+    "billingAddress": billingAddress,
+    "idToken": billingAddress == null ? null : idToken,
+    "provider": provider
   };
+
+  SaveUserDataUseCaseParameters getSaveUserDataParams() {
+    return SaveUserDataUseCaseParameters(
+        localId: localId,
+        role: UserRole.values.byName(role ?? ""),
+        username: username,
+        email: email,
+        phone: phone,
+        dateOfBirth: dateOfBirth,
+        startDate: startDate,
+        photo: photo,
+        shippingAddress: shippingAddress,
+        billingAddress: billingAddress,
+        idToken: idToken,
+        
+    );
+  }
 }
 
-enum UserRole { user, owner, admin, rider }
+class UserAuthProvider {
+  static String google = "Google";
+  static String emailAndPassword = "emailAndPassword";
+}
+
+enum UserRole {
+  user, owner, admin, rider
+}
 
 extension ParseToString on UserRole {
   String toShortString() {

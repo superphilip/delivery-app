@@ -75,7 +75,7 @@ extension on DefaultSignUpUseCase {
       startDate: Datehelpers.getStartDate(),
       photo: UserPhotoHelper.defaultUserPhoto,
       shippingAddress: '',
-      bilingAddress: '',
+      billingAddress: '',
       idToken: entity.idToken,
     );
 

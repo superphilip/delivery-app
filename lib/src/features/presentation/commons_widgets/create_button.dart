@@ -9,6 +9,7 @@ Widget createButton({
   EdgeInsetsGeometry margin = const EdgeInsets.only(top: 20),
   Image? image,
   required Color color,
+  Color colortext = Colors.white,
   double? elevation,
   EdgeInsetsGeometry? marginText,
   required double fontSize,
@@ -35,7 +36,7 @@ Widget createButton({
             margin: marginText,
             child: Text(
               labelButton,
-              style: TextStyle(color: Colors.white, fontSize: fontSize),
+              style: TextStyle(color: colortext, fontSize: fontSize),
             ),
           ),
         ],

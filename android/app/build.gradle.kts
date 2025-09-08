@@ -3,10 +3,11 @@ plugins {
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
+    id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "com.example.delivery_app"
+    namespace = "com.canesantiago.deliveryappflutter"
     compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
@@ -21,7 +22,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.delivery_app"
+        applicationId = "com.canesantiago.deliveryappflutter"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
@@ -29,14 +30,21 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
-
+    buildFeatures {
+        buildConfig = true
+    }
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
+            buildConfigField ("String", "SERVER_CLIENT_ID", "\"758370052462-23e30s1nmqj0845kdpl0get71fgpme40.apps.googleusercontent.com\"")  
         }
-    }
+        debug {
+            buildConfigField ("String", "SERVER_CLIENT_ID", "\"758370052462-23e30s1nmqj0845kdpl0get71fgpme40.apps.googleusercontent.com\"")
+        }
+
+    }   
 }
 
 flutter {

@@ -11,8 +11,9 @@ class SaveUserDataUseCaseParameters {
     this.startDate,
     this.photo,
     this.shippingAddress,
-    this.bilingAddress,
+    this.billingAddress,
     this.idToken,
+    this.provider
   });
 
   String? localId;
@@ -24,20 +25,37 @@ class SaveUserDataUseCaseParameters {
   String? startDate;
   String? photo;
   String? shippingAddress;
-  String? bilingAddress;
+  String? billingAddress;
   String? idToken;
+  String? provider;
+
+  SaveUserDataUseCaseParameters.fromUserEntity(UserEntity user) {
+    localId = user.localId;
+    role = UserRole.values.byName(user.role ?? "");
+    username = user.username;
+    email = user.email;
+    phone = user.phone;
+    dateOfBirth = user.dateOfBirth;
+    startDate = user.startDate;
+    photo = user.photo;
+    shippingAddress = user.shippingAddress;
+    billingAddress = user.billingAddress;
+    idToken = user.idToken;
+    provider = user.provider;
+  }
 
   Map<String, dynamic> toMap() => {
     "localId": localId,
     "role": role,
-    "usarname": username,
+    "username": username,
     "email": email,
     "phone": phone,
     "dateOfBirth": dateOfBirth,
     "startDate": startDate,
     "photo": photo,
     "shippingAddress": shippingAddress,
-    "bilingAddress": bilingAddress,
-    "idToken": idToken,
+    "billingAddress": billingAddress,
+    "idToken": billingAddress == null ? null : idToken,
+    "provider": provider
   };
 }

@@ -34,7 +34,7 @@ class DefaultSaveUserDataUseCase extends SaveUserDataUseCase {
       startDate: parameters.startDate,
       photo: parameters.photo,
       shippingAddress: parameters.shippingAddress,
-      bilingAddress: parameters.bilingAddress,
+      bilingAddress: parameters.billingAddress,
       idToken: parameters.idToken,
     );
 

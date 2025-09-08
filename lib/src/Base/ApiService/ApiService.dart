@@ -39,7 +39,11 @@ class DefaultApiService extends Apiservice {
     try {
       if (response.statusCode.toString().contains('20')) {
         var jsonData = jsonDecode(response.body);
-        return jsonData;
+        if (jsonData == null) {
+          throw Failure.fromMessage(message: _Exceptions.formatException);
+        } else {
+          return jsonData;
+        }
       } else {
         throw Failure.fromBody(body: response.body);
       }
@@ -60,17 +64,17 @@ class DefaultApiService extends Apiservice {
   }) async {
     final _url = Uri.parse(url);
     final body = json.encode(bodyParameters);
-    final response = await http.post(
-      _url,
-      headers: headers,
-      body: body,
-    );
+    final response = await http.post(_url, headers: headers, body: body);
 
     try {
       //Todo: Revisar este if
       if (response.statusCode.toString().contains('20')) {
         var jsonData = jsonDecode(response.body);
-        return jsonData;
+        if (jsonData == null) {
+          throw Failure.fromMessage(message: _Exceptions.formatException);
+        } else {
+          return jsonData;
+        }
       } else {
         throw Failure.fromBody(body: response.body);
       }
@@ -88,20 +92,20 @@ class DefaultApiService extends Apiservice {
     required Map<String, dynamic> bodyParameters,
     required String url,
     Map<String, String>? headers,
-  }) async  {
+  }) async {
     final _url = Uri.parse(url);
     final body = json.encode(bodyParameters);
-    final response = await http.put(
-      _url,
-      headers: headers,
-      body: body,
-    );
+    final response = await http.put(_url, headers: headers, body: body);
 
     try {
       //Todo: Revisar este if
       if (response.statusCode.toString().contains('20')) {
         var jsonData = jsonDecode(response.body);
-        return jsonData;
+        if (jsonData == null) {
+          throw Failure.fromMessage(message: _Exceptions.formatException);
+        } else {
+          return jsonData;
+        }
       } else {
         throw Failure.fromBody(body: response.body);
       }

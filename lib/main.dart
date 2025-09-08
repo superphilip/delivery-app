@@ -1,5 +1,4 @@
 import 'package:delivery_app/src/Base/Views/BaseView.dart';
-import 'package:delivery_app/src/Colors/colors.dart';
 import 'package:delivery_app/src/Features/presentation/StateProviders/Provider.dart';
 
 import 'package:flutter/material.dart';

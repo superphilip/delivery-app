@@ -2,6 +2,7 @@ import 'package:delivery_app/src/Base/Constants/LocalStorageKeys.dart';
 import 'package:delivery_app/src/Features/domain/UseCases/LocalStorage/FetchLocalStorageUseCase.dart';
 import 'package:delivery_app/src/Features/domain/UseCases/LocalStorage/LocalStorageUseCaseParameters.dart';
 import 'package:delivery_app/src/Features/domain/UseCases/User/ValidateCurrentUserUseCase/ValidateCurrentUserUseCase.dart';
+import 'package:flutter/material.dart';
 
 class RouterPath {
   static String welcomePath = 'welcome';
@@ -34,5 +35,9 @@ class MainCoordinator {
     );
     var isUSerValid = idToken;
     return idToken;
+  }
+
+  showTabsPage({required BuildContext context}) {
+    Navigator.pushNamed(context, RouterPath.tabsPath);
   }
 }

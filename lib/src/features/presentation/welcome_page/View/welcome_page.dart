@@ -1,14 +1,33 @@
 import 'dart:ui';
 
+import 'package:delivery_app/src/Base/Views/BaseView.dart';
 import 'package:delivery_app/src/Colors/colors.dart';
+import 'package:delivery_app/src/Features/presentation/StateProviders/Provider.dart';
 import 'package:delivery_app/src/Features/presentation/commons_widgets/commons_widgets.dart';
+import 'package:delivery_app/src/Features/presentation/welcome_page/ViewModel/WelcomePageViewModel.dart';
+import 'package:delivery_app/src/Utils/Helpers/ResultType/ResultType.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class WelcomePage extends StatelessWidget {
+class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
 
   @override
+  State<WelcomePage> createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage> with BaseView {
+  final WelcomePageViewModel _viewModel;
+
+  _WelcomePageState({WelcomePageViewModel? viewModel})
+    : _viewModel = viewModel ?? DefaultWelcomePageViewModel();
+
+  @override
   Widget build(BuildContext context) {
+    _viewModel.iniState(
+      loadingStateProvider: Provider.of<LoadingStateProvider>(context),
+    );
+
     return Scaffold(
       body: Center(
         child: Stack(
@@ -65,13 +84,14 @@ class WelcomePage extends StatelessWidget {
                   image: Image(
                     width: 20,
                     height: 20,
-                    image: AssetImage('assets/facebook.png'),
+                    image: AssetImage('assets/google.png'),
                   ),
-                  color: buttonColor,
+                  color: Colors.white,
+                  colortext: Colors.black,
                   marginText: EdgeInsets.only(left: 10),
                   fontSize: 15,
-                  labelButton: 'Connect with facebook',
-                  func: () => print('goTofacebook'),
+                  labelButton: 'Connect with google',
+                  func: () => _signInWithGoogleTapped(context),
                 ),
               ],
             ),
@@ -79,5 +99,21 @@ class WelcomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+extension UserActions on _WelcomePageState {
+  _signInWithGoogleTapped(BuildContext context) {
+    _viewModel.loadingState.setLoadingState(isLoading: true);
+    _viewModel.signInWithGoogle().then((result) {
+      switch (result.status) {
+        case ResultStatus.success:
+          coordinator.showTabsPage(context: context);
+        case ResultStatus.error:
+          _viewModel.loadingState.setLoadingState(isLoading: false);
+          if (result.error == null) return;
+          errorStateProvider.setFailure(context: context, value: result.error!);
+      }
+    });
   }
 }
