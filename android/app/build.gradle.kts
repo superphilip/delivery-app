@@ -9,7 +9,7 @@ plugins {
 android {
     namespace = "com.canesantiago.deliveryappflutter"
     compileSdk = 36
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -23,9 +23,10 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.canesantiago.deliveryappflutter"
+        multiDexEnabled = true
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        minSdk = 24
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -38,10 +39,7 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
-            buildConfigField ("String", "SERVER_CLIENT_ID", "\"758370052462-23e30s1nmqj0845kdpl0get71fgpme40.apps.googleusercontent.com\"")  
-        }
-        debug {
-            buildConfigField ("String", "SERVER_CLIENT_ID", "\"758370052462-23e30s1nmqj0845kdpl0get71fgpme40.apps.googleusercontent.com\"")
+            buildConfigField ("String", "SERVER_CLIENT_ID", "\"758370052462-r813rc6pgtgsb6ialdeg88s6p45tu8tf.apps.googleusercontent.com\"")  
         }
 
     }   
@@ -49,4 +47,8 @@ android {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    implementation(platform("com.google.firebase:firebase-bom:34.2.0"))
 }

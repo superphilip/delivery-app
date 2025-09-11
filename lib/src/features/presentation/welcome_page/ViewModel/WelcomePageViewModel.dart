@@ -6,7 +6,7 @@ import 'package:delivery_app/src/Features/presentation/StateProviders/LoadingSta
 import 'package:delivery_app/src/Utils/Helpers/ResultType/ResultType.dart';
 
 abstract class WelcomePageViewModelInput {
-  Future<Result<UserEntity, Failure>> signInWithGoogle();
+  Future<Result<UserEntity, Failure>?> signInWithGoogle();
 }
 
 abstract class WelcomePageViewModel extends WelcomePageViewModelInput
@@ -25,7 +25,7 @@ class DefaultWelcomePageViewModel extends WelcomePageViewModel {
   }
 
   @override
-  Future<Result<UserEntity, Failure>> signInWithGoogle() {
+  Future<Result<UserEntity, Failure>?> signInWithGoogle() {
     return _googleSignInUseCase.execute();
   }
 }

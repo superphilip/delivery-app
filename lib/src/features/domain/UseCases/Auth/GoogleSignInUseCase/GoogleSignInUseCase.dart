@@ -12,7 +12,8 @@ import 'package:delivery_app/src/Utils/Helpers/Dates/DateHelpers.dart';
 import 'package:delivery_app/src/Utils/Helpers/ResultType/ResultType.dart';
 
 abstract class GoogleSignInUseCase {
-  Future<Result<UserEntity, Failure>> execute();
+  Future<Result<UserEntity, Failure>?> execute();
+  Future<void> signOutGoogleSesion();
 }
 
 class DefaultGoogleSignInUseCase extends GoogleSignInUseCase {
@@ -33,23 +34,31 @@ class DefaultGoogleSignInUseCase extends GoogleSignInUseCase {
            saveUserDataUseCase ?? DefaultSaveUserDataUseCase();
 
   @override
-  Future<Result<UserEntity, Failure>> execute() async {
+  Future<Result<UserEntity, Failure>?> execute() async {
     final user = await _googleSignInService.signInWithGoogle();
     _saveLocalStorageUseCase.execute(
       parameters: SaveLocalStorageUseCaseParameters(
         key: LocalStorageKeys.idToken,
-        value: user.uid ?? "",
+        value: user?.uid ?? "",
       ),
     );
 
     final isUserInDatabase = await _googleSignInService.isUserInDatabase(
-      uid: user.uid ?? "",
+      uid: user?.uid ?? "",
     );
+
     if (isUserInDatabase) {
+      if (user == null) return null;
       return Result.success(mapUserEntity(user: user));
     } else {
+      if (user == null) return null;
       return _saveUserDataInDataBase(user: user);
     }
+  }
+
+  @override
+  Future<void> signOutGoogleSesion() async {
+    await _googleSignInService.signOutGoogle();
   }
 }
 

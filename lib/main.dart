@@ -1,5 +1,6 @@
 import 'package:delivery_app/src/Base/Views/BaseView.dart';
 import 'package:delivery_app/src/Features/presentation/StateProviders/Provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 
@@ -34,11 +35,7 @@ class MyAppUSerState extends StatelessWidget with BaseView {
       future: coordinator.start(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) return MyApp(initialRoute: snapshot.data);
-        return MaterialApp(
-          home: Scaffold(
-            body: Container(),
-          ),
-        );
+        return MaterialApp(home: Scaffold(body: Container()));
       },
     );
   }
@@ -51,6 +48,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsFlutterBinding.ensureInitialized();
+    Firebase.initializeApp();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: routes,

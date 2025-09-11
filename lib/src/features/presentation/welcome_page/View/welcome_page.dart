@@ -106,13 +106,15 @@ extension UserActions on _WelcomePageState {
   _signInWithGoogleTapped(BuildContext context) {
     _viewModel.loadingState.setLoadingState(isLoading: true);
     _viewModel.signInWithGoogle().then((result) {
-      switch (result.status) {
+      switch (result?.status) {
         case ResultStatus.success:
           coordinator.showTabsPage(context: context);
         case ResultStatus.error:
           _viewModel.loadingState.setLoadingState(isLoading: false);
-          if (result.error == null) return;
-          errorStateProvider.setFailure(context: context, value: result.error!);
+          if (result?.error == null) return;
+          errorStateProvider.setFailure(context: context, value: result!.error!);
+        case null:
+          throw UnimplementedError();
       }
     });
   }
