@@ -1,3 +1,6 @@
+
+
+import 'package:delivery_app/firebase_options.dart';
 import 'package:delivery_app/src/Base/Views/BaseView.dart';
 import 'package:delivery_app/src/Features/presentation/StateProviders/Provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -49,7 +52,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsFlutterBinding.ensureInitialized();
-    Firebase.initializeApp();
+    Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: routes,
