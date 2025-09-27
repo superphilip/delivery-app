@@ -42,6 +42,6 @@ class MockSuccessGeolocationService extends GeolocationService {
 
   @override
   Future<LocationPermissionStatus> getPermissionStatus() async {
-    return LocationPermissionStatus.denied;
+    return LocationPermissionStatus.allowed;
   }
 }

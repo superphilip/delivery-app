@@ -4,7 +4,7 @@ import 'package:delivery_app/src/Features/data/Repositories/Auth/UserAuthData/Us
 import 'package:delivery_app/src/Features/data/Repositories/Auth/UserAuthData/UserAuthDataRepositoryBodyParameters.dart';
 import 'package:delivery_app/src/Features/domain/Entities/Auth/UserAuthData/UserAuthDataEntity.dart';
 import 'package:delivery_app/src/Features/domain/UseCases/Auth/UserAuthData/UserAuthDataUseCaseBodyParameters.dart';
-import 'package:delivery_app/src/Features/domain/interfaces/Interfaces.dart';
+import 'package:delivery_app/src/Features/data/interfaces/Interfaces.dart';
 import 'package:delivery_app/src/Utils/Helpers/ResultType/ResultType.dart';
 
 abstract class UserAuthDataUseCase {

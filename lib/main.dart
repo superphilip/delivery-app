@@ -2,6 +2,7 @@
 
 import 'package:delivery_app/firebase_options.dart';
 import 'package:delivery_app/src/Base/Views/BaseView.dart';
+import 'package:delivery_app/src/Features/presentation/MainCoordinator/MainCoordinator.dart';
 import 'package:delivery_app/src/Features/presentation/StateProviders/Provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -23,6 +24,7 @@ class AppState extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => ErrorStateProvider()),
         ChangeNotifierProvider(create: (_) => LoadingStateProvider()),
+        ChangeNotifierProvider(create: (_) => DefaultUserStateProvider()),
       ],
       child: MyAppUSerState(),
     );
@@ -35,9 +37,12 @@ class MyAppUSerState extends StatelessWidget with BaseView {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: coordinator.start(),
+      future: MainCoordinator.sharedInstance?.start(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) return MyApp(initialRoute: snapshot.data);
+        if (snapshot.hasData){
+          Provider.of<DefaultUserStateProvider>(context).fetchUserData(localId: MainCoordinator.sharedInstance?.userUid ?? ""); 
+          return MyApp(initialRoute: snapshot.data);
+        } 
         return MaterialApp(home: Scaffold(body: Container()));
       },
     );

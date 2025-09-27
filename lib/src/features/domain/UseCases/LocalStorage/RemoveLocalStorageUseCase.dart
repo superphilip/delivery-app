@@ -1,6 +1,6 @@
 import 'package:delivery_app/src/Features/data/Repositories/LocalStorage/RemoveLocalStorageRepository.dart';
 import 'package:delivery_app/src/Features/domain/UseCases/LocalStorage/LocalStorageUseCaseParameters.dart';
-import 'package:delivery_app/src/Features/domain/interfaces/Interfaces.dart';
+import 'package:delivery_app/src/Features/data/interfaces/Interfaces.dart';
 
 abstract class RemoveLocalStorageUseCase {
   Future<void> execute({

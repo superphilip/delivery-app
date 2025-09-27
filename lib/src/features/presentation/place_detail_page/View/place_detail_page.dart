@@ -57,7 +57,7 @@ class PlaceDetailPage extends StatelessWidget {
             ),
             leading: Builder(
               builder: (BuildContext context) {
-                return backButton(context, Colors.white);
+                return BackButtonView(color: Colors.white);
               },
             ),
             actions: [
@@ -254,7 +254,7 @@ Widget _headers({required String texto}) {
   return Container(
     margin: EdgeInsets.only(top: 20, bottom: 5.0),
     padding: EdgeInsets.symmetric(horizontal: 20),
-    child: headerDoubleText(textHeader: texto),
+    child: DoubleTextView(textHeader: texto, textAction: '')
   );
 }
 
@@ -546,7 +546,13 @@ Widget _yourRating() {
         ),
         Container(
           margin: EdgeInsets.only(top: 10, left: 10),
-          child: headerText(lorem, gris, 12, FontWeight.w400, textAlign: TextAlign.left),
+          child: headerText(
+            lorem,
+            gris,
+            12,
+            FontWeight.w400,
+            textAlign: TextAlign.left,
+          ),
         ),
         Container(
           margin: EdgeInsets.only(top: 10, left: 20),

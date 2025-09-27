@@ -1,177 +1,98 @@
+import 'package:delivery_app/src/Base/Views/BaseView.dart';
+import 'package:delivery_app/src/Colors/colors.dart';
+import 'package:delivery_app/src/Features/domain/Entities/Places/PlaceListEntity.dart';
+import 'package:delivery_app/src/Features/presentation/ErrorView/ErrorView.dart';
+import 'package:delivery_app/src/Features/presentation/search_page/View/Components/SearchPageBuildResultsView.dart';
+import 'package:delivery_app/src/Features/presentation/search_page/View/Components/SearchPageSuggestionsView.dart';
+import 'package:delivery_app/src/Features/presentation/search_page/ViewModel/SearchPageViewModel.dart';
 import 'package:flutter/material.dart';
 
-//Colors
-import 'package:delivery_app/src/Colors/colors.dart';
+class SearchPage extends SearchDelegate with BaseView {
+  final SearchPageViewModel _viewModel;
 
-//Widgets
-import 'package:delivery_app/src/Features/presentation/commons_widgets/commons_widgets.dart';
-
-class Searchpage extends StatelessWidget {
-  const Searchpage({super.key});
+  SearchPage({
+    super.searchFieldLabel,
+    super.searchFieldStyle,
+    super.searchFieldDecorationTheme,
+    super.keyboardType,
+    super.textInputAction,
+    super.autocorrect,
+    super.enableSuggestions,
+    SearchPageViewModel? viewModel,
+  }) : _viewModel = viewModel ?? DefaultSearchPageViewModel();
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor: Colors.white,
-            leading: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: Icon(Icons.close, color: Colors.black, size: 40),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 20),
-                      alignment: Alignment.centerLeft,
-                      child: headerText(
-                        'Search',
-                        primaryColor,
-                        30,
-                        FontWeight.bold,
-                      ),
-                    ),
-                    _searchInput(context),
-                    SizedBox(height: 40),
-                    headerDoubleText(
-                      textHeader: 'Recent search',
-                      textAction: 'Clear All',
-                    ),
-                    _sliderRecentSearch(),
-                    SizedBox(height: 20),
-                    headerDoubleText(
-                      textHeader: 'Recommend for you',
-                      textAction: '',
-                    ),
-                    SizedBox(height: 20),
-                    popularesCard(
-                      context: context,
-                      margin: EdgeInsets.only(left: 10),
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      image: Image(
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1599&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                        ),
-                      ),
-                      title: 'Kellys Cafe and Expreso',
-                      subtitle: '882 Swift courts Apt. 918',
-                      review: '4.8',
-                      ratings: '(233 ratings)',
-                    ),
-                    popularesCard(
-                      context: context,
-                      margin: EdgeInsets.only(left: 10),
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      image: Image(
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1599&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                        ),
-                      ),
-                      title: 'Kellys Cafe and Expreso',
-                      subtitle: '882 Swift courts Apt. 918',
-                      review: '4.8',
-                      ratings: '(233 ratings)',
-                    ),
-                    popularesCard(
-                      context: context,
-                      margin: EdgeInsets.only(left: 10),
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      image: Image(
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1599&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                        ),
-                      ),
-                      title: 'Kellys Cafe and Expreso',
-                      subtitle: '882 Swift courts Apt. 918',
-                      review: '4.8',
-                      ratings: '(233 ratings)',
-                    ),
-                    popularesCard(
-                      context: context,
-                      margin: EdgeInsets.only(left: 10),
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      image: Image(
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1599&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                        ),
-                      ),
-                      title: 'Kellys Cafe and Expreso',
-                      subtitle: '882 Swift courts Apt. 918',
-                      review: '4.8',
-                      ratings: '(233 ratings)',
-                    ),
-                  ],
-                ),
-              ),
-            ]),
-          ),
-        ],
+  ThemeData appBarTheme(BuildContext context) {
+    return ThemeData(
+      textTheme: TextTheme(titleLarge: TextStyle(color: Colors.white)),
+      appBarTheme: AppBarTheme(backgroundColor: orange),
+      inputDecorationTheme: InputDecorationTheme(
+        border: InputBorder.none,
+        hintStyle: TextStyle(fontSize: 18, color: Colors.white),
       ),
     );
   }
-}
 
-Widget _searchInput(BuildContext context) {
-  return Container(
-    height: 40,
-    margin: EdgeInsets.only(top: 20),
-    padding: EdgeInsets.only(left: 5),
-    decoration: BoxDecoration(
-      color: bgInputs,
-      borderRadius: BorderRadius.circular(20),
-    ),
-    child: TextField(
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.only(top: 5),
-        prefixIcon: Icon(Icons.search, color: gris),
-        hintText: 'Search',
-        border: OutlineInputBorder(borderSide: BorderSide.none),
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear, color: Colors.white),
+        onPressed: () => query = "",
       ),
-    ),
-  );
-}
+    ];
+  }
 
-Widget _sliderRecentSearch() {
-  return Container(
-    height: 200,
-    child: ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (BuildContext context, int index) {
-        return card(
-          context: context,
-          headtitle: headerText(
-            "Andy & Cindy's Diner",
-            primaryColor,
-            17,
-            FontWeight.w500,
-          ),
-          headsubtitle: headerText(
-            '87 Botsford Circle Apt',
-            gris,
-            13,
-            FontWeight.w400,
-          ),
-        );
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      onPressed: () => close(context, null),
+      icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return FutureBuilder(
+      future: _viewModel.fetchPlacesListByQuery(query: query),
+      builder: (BuildContext context, AsyncSnapshot<PlaceListEntity> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return loadingView;
+          case ConnectionState.done:
+            if (snapshot.hasError || !snapshot.hasData) {
+              return ErrorView();
+            }
+            if (snapshot.data?.placeList?.isEmpty ?? true) {
+              return SearchPageSuggestionsView(
+                textHeader: 'No result found',
+                textAction: '',
+                isRecentSearchSuggestion: false,
+                viewModel: _viewModel,
+              );
+            } else {
+              return SearchPageBuildResultsView(
+                places: snapshot.data?.placeList ?? [],
+              );
+            }
+          default:
+            return loadingView;
+        }
       },
-    ),
-  );
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    if (query.isEmpty) {
+      return SearchPageSuggestionsView(
+        textHeader: "Recently viewed",
+        textAction: 'Clear All',
+        isRecentSearchSuggestion: true,
+        viewModel: _viewModel,
+      );
+    } else {
+      return Container();
+    }
+  }
 }

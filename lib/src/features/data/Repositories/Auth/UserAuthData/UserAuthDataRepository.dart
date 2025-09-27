@@ -1,7 +1,7 @@
 import 'package:delivery_app/src/Base/ApiService/AppError.dart';
 import 'package:delivery_app/src/Features/data/Decodables/Auth/UserAuthData/UserAuthDataDecodable.dart';
 import 'package:delivery_app/src/Features/data/Repositories/Auth/UserAuthData/UserAuthDataRepositoryBodyParameters.dart';
-import 'package:delivery_app/src/Features/domain/interfaces/Interfaces.dart';
+import 'package:delivery_app/src/Features/data/interfaces/Interfaces.dart';
 import 'package:delivery_app/src/Services/FirebaseServices/AuthFirebaseServices/Interfaces/AuthFirebaseInterfaces.dart';
 import 'package:delivery_app/src/Services/FirebaseServices/AuthFirebaseServices/Services/GetUserAuthDataService.dart';
 import 'package:delivery_app/src/Utils/Helpers/ResultType/ResultType.dart';

@@ -1,7 +1,7 @@
 import 'package:delivery_app/src/Base/ApiService/AppError.dart';
 import 'package:delivery_app/src/Features/data/Repositories/Auth/SignUpRepository/SignUpRepositoryParameters.dart';
 
-import 'package:delivery_app/src/Features/domain/interfaces/Interfaces.dart';
+import 'package:delivery_app/src/Features/data/interfaces/Interfaces.dart';
 import 'package:delivery_app/src/Services/FirebaseServices/AuthFirebaseServices/Interfaces/AuthFirebaseInterfaces.dart';
 import 'package:delivery_app/src/Services/FirebaseServices/AuthFirebaseServices/Services/SignUpAuthService.dart';
 import 'package:delivery_app/src/Services/FirebaseServices/AuthFirebaseServices/decodables/SignUpDecodable.dart';

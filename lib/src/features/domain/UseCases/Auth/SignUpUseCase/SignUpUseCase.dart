@@ -7,10 +7,10 @@ import 'package:delivery_app/src/Features/domain/Entities/User/UserEntity.dart';
 import 'package:delivery_app/src/Features/domain/UseCases/Auth/SignUpUseCase/SignUpUseCaseParameters.dart';
 import 'package:delivery_app/src/Features/domain/UseCases/User/SaveUserDataUseCase/SaveUserDataUseCase.dart';
 import 'package:delivery_app/src/Features/domain/UseCases/User/SaveUserDataUseCase/SaveUserDataUseCaseParameters.dart';
-import 'package:delivery_app/src/Features/domain/interfaces/Interfaces.dart';
+import 'package:delivery_app/src/Features/data/interfaces/Interfaces.dart';
 import 'package:delivery_app/src/Utils/Helpers/Dates/DateHelpers.dart';
 import 'package:delivery_app/src/Utils/Helpers/ResultType/ResultType.dart';
-import 'package:delivery_app/src/Utils/Helpers/UserPhotos/UserPhotoHelper.dart';
+import 'package:delivery_app/src/Utils/Helpers/DefaultImages/UserPhotoHelper.dart';
 
 abstract class SignUpUseCase {
   Future<Result<SignUpEntity, Failure>> execute({

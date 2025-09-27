@@ -4,7 +4,7 @@ import 'package:delivery_app/src/Features/data/Repositories/Auth/SignInRepositor
 import 'package:delivery_app/src/Features/data/Repositories/Auth/SignInRepository/SignInRepository.dart';
 import 'package:delivery_app/src/Features/domain/Entities/Auth/SignInEntity/SignInEntity.dart';
 import 'package:delivery_app/src/Features/domain/UseCases/Auth/SignInUseCase/SignInUseCaseBodyParameters.dart';
-import 'package:delivery_app/src/Features/domain/interfaces/Interfaces.dart';
+import 'package:delivery_app/src/Features/data/interfaces/Interfaces.dart';
 import 'package:delivery_app/src/Utils/Helpers/ResultType/ResultType.dart';
 
 abstract class SignInUseCase {

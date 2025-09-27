@@ -1,11 +1,12 @@
 import 'package:delivery_app/src/Features/data/Repositories/LocalStorage/FetchLocalStorageRepository.dart';
 import 'package:delivery_app/src/Features/domain/UseCases/LocalStorage/LocalStorageUseCaseParameters.dart';
-import 'package:delivery_app/src/Features/domain/interfaces/Interfaces.dart';
+import 'package:delivery_app/src/Features/data/interfaces/Interfaces.dart';
 
 abstract class FetchLocalStorageUseCase {
   Future<String?> execute({
     required FetchLocalStorageUseCaseParameters parameters,
   });
+  Future<List<String>> fetchRecentSearches();
 }
 
 class DefaultFetchLocalStorageUseCase extends FetchLocalStorageUseCase {
@@ -23,5 +24,12 @@ class DefaultFetchLocalStorageUseCase extends FetchLocalStorageUseCase {
     return await _fetchLocalStorageRepository.fetchInLocalStorage(
       key: parameters.key,
     );
+  }
+
+  @override
+  Future<List<String>> fetchRecentSearches() async {
+    final recentSearches = await _fetchLocalStorageRepository
+        .fetchRecentSearches();
+    return recentSearches ?? [];
   }
 }

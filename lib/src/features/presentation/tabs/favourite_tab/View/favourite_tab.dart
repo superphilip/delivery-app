@@ -1,6 +1,12 @@
+import 'package:delivery_app/src/Base/Views/BaseView.dart';
 import 'package:delivery_app/src/Colors/colors.dart';
-import 'package:delivery_app/src/Features/presentation/commons_widgets/commons_widgets.dart';
+import 'package:delivery_app/src/Features/domain/Entities/Places/PlaceListEntity.dart';
+import 'package:delivery_app/src/Features/presentation/ErrorView/ErrorView.dart';
+import 'package:delivery_app/src/Features/presentation/StateProviders/Provider.dart';
+import 'package:delivery_app/src/Features/presentation/tabs/favourite_tab/View/Components/FavoutireTabContentView.dart';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FavouriteTab extends StatefulWidget {
   const FavouriteTab({super.key});
@@ -9,80 +15,43 @@ class FavouriteTab extends StatefulWidget {
   State<FavouriteTab> createState() => _FavouriteTabState();
 }
 
-class _FavouriteTabState extends State<FavouriteTab> {
+class _FavouriteTabState extends State<FavouriteTab>
+    with BaseView, FavouritePageChangeStateDelegate {
   @override
   Widget build(BuildContext context) {
+    Provider.of<DefaultUserStateProvider>(context).favouritePageChangeStateDelegate = this;
+
     return Scaffold(
       backgroundColor: bgGreyPage,
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            pinned: true,
-            leading: Text(''),
-            backgroundColor: white,
-            title: headerText('My favourites', primaryColor, 17, FontWeight.w600),
-            centerTitle: true,
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: [
-                      favouritesCard(
-                          image: NetworkImage('https://images.unsplash.com/photo-1459789034005-ba29c5783491?q=80&w=1538&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-                          title: "Andy &Cindy's Diner",
-                          subtitle: "87 Botsford Circle Apt",
-                          review: "4.8",
-                          ratings: "(233 ratings)",
-                          isFavourite: true,
-                          buttonText: 'Delivery',    
-                        ),
-                        favouritesCard(
-                          image: NetworkImage('https://images.unsplash.com/photo-1459789034005-ba29c5783491?q=80&w=1538&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-                          title: "Andy &Cindy's Diner",
-                          subtitle: "87 Botsford Circle Apt",
-                          review: "4.8",
-                          ratings: "(233 ratings)",
-                          isFavourite: false,
-                          buttonText: 'Delivery'
-                        ),
-                        favouritesCard(
-                          image: NetworkImage('https://images.unsplash.com/photo-1459789034005-ba29c5783491?q=80&w=1538&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-                          title: "Andy &Cindy's Diner",
-                          subtitle: "87 Botsford Circle Apt",
-                          review: "4.8",
-                          ratings: "(233 ratings)",
-                          isFavourite: false,
-                          buttonText: 'Delivery'
-                        ),
-                        favouritesCard(
-                          image: NetworkImage('https://images.unsplash.com/photo-1459789034005-ba29c5783491?q=80&w=1538&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-                          title: "Andy &Cindy's Diner",
-                          subtitle: "87 Botsford Circle Apt",
-                          review: "4.8",
-                          ratings: "(233 ratings)",
-                          isFavourite: false,
-                          buttonText: 'Delivery'
-                        ),
-                        favouritesCard(
-                          image: NetworkImage('https://images.unsplash.com/photo-1459789034005-ba29c5783491?q=80&w=1538&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-                          title: "Andy &Cindy's Diner",
-                          subtitle: "87 Botsford Circle Apt",
-                          review: "4.8",
-                          ratings: "(233 ratings)",
-                          isFavourite: false,
-                          buttonText: 'Delivery'
-                        ),
-                    ],
-                  ),
-                ),
-              ]
-            )
-          ),
-        ],
+      body: FutureBuilder(
+        future: Provider.of<DefaultUserStateProvider>(context).fetchUserFavouritePlaces(),
+        builder:
+            (
+              BuildContext context,
+              AsyncSnapshot<List<PlaceListDetailEntity>> snapshot,
+            ) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return loadingView;
+                case ConnectionState.done:
+                  if (snapshot.hasError || !snapshot.hasData) {
+                    return ErrorView();
+                  }
+                  if (snapshot.hasData) {
+                  return FavoutireTabContentView(placeList:snapshot.data ?? []);
+                } else {
+                  return Container();
+                }
+                default:
+                  return loadingView;
+              }
+            },
       ),
     );
+  }
+
+  @override
+  placeFromFavouritesRemoved() {
+   setState(() {});
   }
 }

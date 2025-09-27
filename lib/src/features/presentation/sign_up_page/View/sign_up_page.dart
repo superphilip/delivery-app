@@ -22,12 +22,10 @@ class SignUpPage extends StatelessWidget with BaseView {
   SignUpPage({super.key, SignUpViewModel? viewModel})
     : _viewModel = viewModel ?? DefaultSignUpViewModel();
 
-  
-
   @override
   Widget build(BuildContext context) {
     _viewModel.iniState(
-        loadingStateProvider: Provider.of<LoadingStateProvider>(context),
+      loadingStateProvider: Provider.of<LoadingStateProvider>(context),
     );
     return _viewModel.loadingState.isLoading
         ? loadingView
@@ -38,7 +36,7 @@ class SignUpPage extends StatelessWidget with BaseView {
               elevation: 0,
               leading: Builder(
                 builder: (BuildContext context) {
-                  return backButton(context, Colors.black);
+                  return BackButtonView(color: Colors.black);
                 },
               ),
             ),

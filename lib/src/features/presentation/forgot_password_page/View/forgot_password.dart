@@ -29,7 +29,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         elevation: 0,
         leading: Builder(
           builder: (BuildContext context) {
-            return backButton(context, Colors.black);
+            return BackButtonView(color: Colors.black);
           },
         ),
       ),

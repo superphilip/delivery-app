@@ -1,5 +1,5 @@
 import 'package:delivery_app/src/Features/data/Repositories/Auth/UpdatePassword/UpdatePasswordRepository.dart';
-import 'package:delivery_app/src/Features/domain/interfaces/Interfaces.dart';
+import 'package:delivery_app/src/Features/data/interfaces/Interfaces.dart';
 
 abstract class UpdatePasswordUseCase {
   Future<void> execute({required String email});

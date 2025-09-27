@@ -1,6 +1,6 @@
 
 
-import 'package:delivery_app/src/Features/domain/interfaces/Interfaces.dart';
+import 'package:delivery_app/src/Features/data/interfaces/Interfaces.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DefaultRemoveLocalStorageRepository extends RemoveLocalStorageRepository {

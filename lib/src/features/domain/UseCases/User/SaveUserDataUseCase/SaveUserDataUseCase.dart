@@ -4,7 +4,7 @@ import 'package:delivery_app/src/Features/data/Repositories/User/SaveUserDataRep
 import 'package:delivery_app/src/Features/data/Repositories/User/UserBodyParameters.dart';
 import 'package:delivery_app/src/Features/domain/Entities/User/UserEntity.dart';
 import 'package:delivery_app/src/Features/domain/UseCases/User/SaveUserDataUseCase/SaveUserDataUseCaseParameters.dart';
-import 'package:delivery_app/src/Features/domain/interfaces/Interfaces.dart';
+import 'package:delivery_app/src/Features/data/interfaces/Interfaces.dart';
 import 'package:delivery_app/src/Utils/Helpers/ResultType/ResultType.dart';
 
 abstract class SaveUserDataUseCase {

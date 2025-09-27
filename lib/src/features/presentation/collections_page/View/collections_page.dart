@@ -1,10 +1,14 @@
+import 'package:delivery_app/src/Base/Views/BaseView.dart';
 import 'package:delivery_app/src/Colors/colors.dart';
+import 'package:delivery_app/src/Features/domain/Entities/Collections/CollectionEntity.dart';
 import 'package:delivery_app/src/Features/presentation/commons_widgets/back_button.dart';
 import 'package:delivery_app/src/Features/presentation/commons_widgets/header_text.dart';
 import 'package:flutter/material.dart';
 
 class CollectionsPage extends StatelessWidget {
-  const CollectionsPage({super.key});
+  List<CollectionDetailEntity> collections;
+
+  CollectionsPage({super.key, required this.collections});
 
   @override
   Widget build(BuildContext context) {
@@ -18,33 +22,22 @@ class CollectionsPage extends StatelessWidget {
             title: headerText('Collections', primaryColor, 17, FontWeight.bold),
             leading: Builder(
               builder: (BuildContext context) {
-                return backButton(context, Colors.black);
+                return BackButtonView(color: Colors.black);
               },
             ),
           ),
           SliverPadding(
             padding: EdgeInsets.only(left: 20),
-            sliver: SliverGrid.count(
-              crossAxisCount: 2,
-              mainAxisSpacing: 10,
-              children: [
-                _card(context),
-                _card(context),
-                _card(context),
-                _card(context),
-                _card(context),
-                _card(context),
-                _card(context),
-                _card(context),
-                _card(context),
-                _card(context),
-                _card(context),
-                _card(context),
-                _card(context),
-                _card(context),
-                _card(context),
-                _card(context),
-              ],
+            sliver: SliverGrid(
+              delegate: SliverChildBuilderDelegate((ctx, index) {
+                return CollectionGridCardView(collection: collections[index]);
+              }, childCount: collections.length),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                crossAxisCount: 2,
+                childAspectRatio: 2,
+              ),
             ),
           ),
         ],
@@ -53,40 +46,40 @@ class CollectionsPage extends StatelessWidget {
   }
 }
 
-Widget _card(BuildContext context) {
-  return GestureDetector(
-    onTap: () => Navigator.pushNamed(context, 'collections-detail'),
-    child: Stack(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image(
+class CollectionGridCardView extends StatelessWidget with BaseView {
+  CollectionDetailEntity collection;
+  CollectionGridCardView({super.key, required this.collection});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => coordinator.showCollectionsDetailPage(context: context, collection: collection),
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image(
+              width: 165,
+              height: 190,
+              fit: BoxFit.cover,
+              image: NetworkImage(
+                collection.img,
+              ),
+            ),
+          ),
+          Container(
             width: 165,
             height: 190,
-            fit: BoxFit.cover,
-            image: NetworkImage('https://plus.unsplash.com/premium_photo-1669261881937-05337dde82df?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')
+            decoration: BoxDecoration(
+              color: Colors.black45,
+              borderRadius: BorderRadius.circular(10),
+            ),
           ),
-        ),
-        Container(
-          width: 165,
-          height: 190,
-          decoration: BoxDecoration(
-            color: Color.fromRGBO(0, 0, 0, 0.3),
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-        Container(
-          alignment: Alignment.center,
-          margin: EdgeInsets.only(right: 35, bottom: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              headerText('Asia', Colors.white, 18, FontWeight.bold),
-              headerText('128 places', Colors.white, 15, FontWeight.w300),
-            ],
-          ),
-        )
-      ],
-    ),
-  );
+          Center(
+            child: headerText(collection.name, Colors.white, 18, FontWeight.bold),
+          )
+        ],
+      ),
+    );
+  }
 }

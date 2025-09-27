@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget headerText(String texto, Color color, double fontSize, FontWeight fontWeight, {TextAlign textAlign = TextAlign.justify, TextOverflow? overflow}) {
+Widget headerText(String texto, Color color, double fontSize, FontWeight fontWeight, {TextAlign textAlign = TextAlign.justify, TextOverflow? overflow, int? maxLines}) {
   return Text(
     texto,
     style: TextStyle(
@@ -9,6 +9,7 @@ Widget headerText(String texto, Color color, double fontSize, FontWeight fontWei
       fontSize: fontSize,
     ),
     textAlign: textAlign,
+    maxLines: maxLines,
     overflow: overflow,
   );
 }

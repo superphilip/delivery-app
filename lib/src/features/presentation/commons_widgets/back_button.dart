@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
-Widget backButton(BuildContext context, Color color) {
-  return IconButton(
+class BackButtonView extends StatelessWidget {
+  Color color;
+  BackButtonView({super.key, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
     icon: Icon(
       Icons.arrow_back, 
       color: color,
@@ -11,4 +16,6 @@ Widget backButton(BuildContext context, Color color) {
       Navigator.pop(context);
     },
   );
+  }
 }
+
